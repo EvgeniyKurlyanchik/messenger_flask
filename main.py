@@ -51,6 +51,17 @@ def send_message():
     print(f"пользователь '{name}'   пишет   '{text}'")
     add_message(name,text)
     return "ok"
+@app.route("/status")
+def get_satus():
+    msgs = load_messages()
+    length_all_msgs = len(msgs)
+    authors = []
+    for msg in msgs:
+        name = msg["author"]
+        if name in authors:
+            continue
+        authors.append(name)
+    return {"msg_count": length_all_msgs,"authors_count":len(authors)}
 
 if __name__ == '__main__':
     app.run(host= '0.0.0.0',port=8080)
